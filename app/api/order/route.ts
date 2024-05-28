@@ -19,13 +19,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (req: NextRequest) => {
   try {
-    const reqBody = await req.json();
-    if (reqBody) {
-      const { id } = reqBody;
-      const docRef = doc(db, "Order", id);
-      const order = await getDoc(docRef);
-      return sendResponse(200, { data: order });
-    }
     const snapshot = await getDocs(collection(db, "Order"));
     const orders = snapshot.docs.map((doc) => ({
       id: doc.id,
@@ -69,39 +62,24 @@ export const POST = async (req: NextRequest) => {
 export const PUT = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
-    const {
-      id,
-      customerName,
-      productName,
-      quantity,
-      totalPrice,
-      orderDate,
-      status,
-    } = reqBody;
-    const customerId = findCustomerByName(customerName);
-    const productId = findProductByName(productName);
-    const docRef = doc(db, "Order", id);
-    const res = await updateDoc(docRef, {
-      customerId,
-      productId,
-      quantity,
-      totalPrice,
-      orderDate,
-      status,
+    const { id, status } = reqBody;
+    console.log(reqBody);
+    // Query Firestore to find the document with matching id
+    const q = query(collection(db, "Order"), where("id", "==", id));
+    const querySnapshot = await getDocs(q);
+
+    // Check if the document with matching id exists
+    if (querySnapshot.size === 0) {
+      return sendResponse(404, { message: "Order not found" });
+    }
+
+    // Update the document
+    querySnapshot.forEach(async (doc) => {
+      await updateDoc(doc.ref, {
+        status,
+      });
     });
     return sendResponse(200, { message: "Order has been updated" });
-  } catch (error: any) {
-    return sendResponse(500, { message: error.message });
-  }
-};
-
-export const DELETE = async (req: NextRequest) => {
-  try {
-    const reqBody = await req.json();
-    const { id } = reqBody;
-    const docRef = doc(db, "Order", id);
-    deleteDoc(docRef);
-    return sendResponse(200, { message: "Order has been deleted" });
   } catch (error: any) {
     return sendResponse(500, { message: error.message });
   }

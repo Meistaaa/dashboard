@@ -1,39 +1,44 @@
 "use client";
-import React from "react";
-import {useEffect} from "react";
-import {useState} from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
-import {OrderTable } from "@/app/order/order-table";
-import { OrderType } from "@/types/orderType";
+import { Order } from "@/types/orderType";
+import { OrderTable } from "./order-table";
 
-const Orders = () => {
-  const [orders, setOrders] = useState<OrderType[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+const Categories = () => {
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoading, setIsLoading] = React.useState(true);
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   const fetchOrders = async () => {
-    try {
-      const response = await axios.get("/api/orders");
-      setOrders(response.data.data);
-      setIsLoading(false);
-    } catch (error) {
-      toast.error("Error fetching orders.");
-      setIsLoading(false);
-    }
+    const fetchedCategories = await axios
+      .get("/api/order")
+      .then((res) => res.data.data);
+    setOrders(fetchedCategories);
   };
 
   useEffect(() => {
     fetchOrders();
+    setIsLoading(false);
   }, []);
 
+  const selectOrder = (order: Order) => {
+    setSelectedOrder(order);
+  };
   return (
     <>
       <div className="h-full flex-1 flex-col space-y-8 p-8 md:flex">
-        <h2 className="text-3xl font-bold tracking-tight">Orders</h2>
-        <OrderTable orders={orders} isLoading={isLoading} />
+        <div className="flex items-center justify-between space-y-2">
+          <h2 className="text-3xl font-bold tracking-tight">Categories</h2>
+        </div>
+        <OrderTable
+          orders={orders}
+          isLoading={isLoading}
+          fetchOrders={fetchOrders}
+        />
       </div>
     </>
   );
 };
 
-export default Orders;
+export default Categories;
