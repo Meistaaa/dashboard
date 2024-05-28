@@ -32,15 +32,16 @@ export const GET = async (req: NextRequest) => {
 export const POST = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
-    const { name, description, category, price, stock, weight } = reqBody;
+    const { name, description, category, price, stock, weight, imageUrl } =
+      reqBody;
     console.log(reqBody);
     const snapshot = addDoc(collection(db, "Product"), {
       name,
       description,
       categoryId: category,
-      imageUrl: "test",
+      imageUrl,
       price,
-      cost: 2,
+
       stock,
       weight,
     });
@@ -54,7 +55,16 @@ export const PUT = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
     const {
-      payload: { id, name, category, description, price, stock, weight },
+      payload: {
+        id,
+        name,
+        category,
+        description,
+        price,
+        stock,
+        weight,
+        imageUrl,
+      },
     } = reqBody;
 
     console.log(reqBody);
@@ -69,6 +79,7 @@ export const PUT = async (req: NextRequest) => {
       description,
       categoryId: category,
       price,
+      imageUrl,
       stock,
       weight,
     });

@@ -38,6 +38,7 @@ const FormDataSchema = z.object({
   description: z.string(),
   stock: z.number(),
   weight: z.number(),
+  imageUrl: z.string(),
   category: z.string(),
   price: z.number(),
 });
@@ -65,6 +66,7 @@ const CreateProduct = ({
       stock: 0,
       price: 0,
       category: "",
+      imageUrl: "",
     },
   });
 
@@ -104,6 +106,7 @@ const CreateProduct = ({
         weight: selectedProduct.weight,
         category: selectedProduct.categoryId,
         price: selectedProduct.price,
+        imageUrl: selectedProduct.imageUrl,
       });
     } else {
       form.reset({
@@ -112,6 +115,7 @@ const CreateProduct = ({
         weight: 0,
         stock: 0,
         price: 0,
+        imageUrl: "",
         category: "",
       });
       setSelectedProduct(null);
@@ -164,6 +168,22 @@ const CreateProduct = ({
                       placeholder="Description"
                       {...field}
                       {...form.register("description", { required: true })}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              name="imageUrl"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Image Url</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="ImageUrl"
+                      {...field}
+                      {...form.register("imageUrl", { required: true })}
                     />
                   </FormControl>
                   <FormMessage />
