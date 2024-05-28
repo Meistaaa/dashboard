@@ -11,6 +11,7 @@ import {
   XMarkIcon,
   Bars3Icon,
 } from "@heroicons/react/24/outline";
+import { usePathname } from "next/navigation";
 
 interface NavigationItem {
   name: string;
@@ -31,6 +32,8 @@ function classNames(...classes: (string | boolean)[]) {
 }
 
 export default function Sidebar() {
+  const pathname = usePathname();
+  console.log(pathname);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
@@ -114,7 +117,7 @@ export default function Sidebar() {
                                 <a
                                   href={item.href}
                                   className={classNames(
-                                    item.current
+                                    pathname === item.href
                                       ? "bg-indigo-700 text-white"
                                       : "text-indigo-200 hover:text-white hover:bg-indigo-700",
                                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -122,7 +125,7 @@ export default function Sidebar() {
                                 >
                                   <item.icon
                                     className={classNames(
-                                      item.current
+                                      pathname === item.href
                                         ? "text-white"
                                         : "text-indigo-200 group-hover:text-white",
                                       "h-6 w-6 shrink-0"
@@ -164,7 +167,7 @@ export default function Sidebar() {
                         <a
                           href={item.href}
                           className={classNames(
-                            item.current
+                            pathname === item.href
                               ? "bg-indigo-700 text-white"
                               : "text-indigo-200 hover:text-white hover:bg-indigo-700",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
@@ -172,7 +175,7 @@ export default function Sidebar() {
                         >
                           <item.icon
                             className={classNames(
-                              item.current
+                              pathname === item.href
                                 ? "text-white"
                                 : "text-indigo-200 group-hover:text-white",
                               "h-6 w-6 shrink-0"
