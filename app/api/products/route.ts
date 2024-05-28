@@ -34,17 +34,17 @@ export const POST = async (req: NextRequest) => {
     const reqBody = await req.json();
     const { name, description, category, price, stock, weight, imageUrl } =
       reqBody;
-    console.log(reqBody);
-    const snapshot = addDoc(collection(db, "Product"), {
+    const docRef = await addDoc(collection(db, "Product"), {
       name,
       description,
       categoryId: category,
       imageUrl,
       price,
-
       stock,
       weight,
     });
+    const docId = docRef.id;
+    await updateDoc(docRef, { id: docId });
     return sendResponse(200, { message: "Product has been created" });
   } catch (error: any) {
     return sendResponse(500, { message: error.message });
