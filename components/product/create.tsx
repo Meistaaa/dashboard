@@ -34,7 +34,7 @@ import { Input } from "../ui/input";
 import { Loader2 } from "lucide-react";
 import { Product } from "@/types/productType";
 const FormDataSchema = z.object({
-  title: z.string().min(3, { message: "Name must be at least 3 characters." }),
+  name: z.string().min(3, { message: "Name must be at least 3 characters." }),
   description: z.string(),
   stock: z.number(),
   weight: z.number(),
@@ -59,7 +59,7 @@ const CreateProduct = ({
   const form = useForm<Inputs>({
     resolver: zodResolver(FormDataSchema),
     defaultValues: {
-      title: "",
+      name: "",
       description: "",
       weight: 0,
       stock: 0,
@@ -76,13 +76,13 @@ const CreateProduct = ({
     try {
       setLoading(true);
       if (selectedProduct) {
-        await axios.put(`/api/product`, { payload });
+        await axios.put(`/api/products`, { payload });
         await onSuccess();
         toast.success("Product updated successfully.");
         form.reset();
         return;
       }
-      const response = await axios.post("/api/product", payload);
+      const response = await axios.post("/api/products", payload);
       await onSuccess();
       toast.success("Product created successfully.");
       form.reset();
@@ -98,7 +98,7 @@ const CreateProduct = ({
   const onOpenChange = (open: boolean) => {
     if (open && selectedProduct) {
       form.reset({
-        title: selectedProduct.name,
+        name: selectedProduct.name,
         description: selectedProduct.description,
         stock: selectedProduct.stock,
         weight: selectedProduct.weight,
@@ -107,7 +107,7 @@ const CreateProduct = ({
       });
     } else {
       form.reset({
-        title: "",
+        name: "",
         description: "",
         weight: 0,
         stock: 0,
@@ -139,7 +139,7 @@ const CreateProduct = ({
           <form onSubmit={form.handleSubmit(processForm)} className="space-y-8">
             <div className="flex justify-between gap-2"></div>
             <FormField
-              name="title"
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Title</FormLabel>
@@ -147,7 +147,7 @@ const CreateProduct = ({
                     <Input
                       placeholder="Title"
                       {...field}
-                      {...form.register("title", { required: true })}
+                      {...form.register("name", { required: true })}
                     />
                   </FormControl>
                   <FormMessage />

@@ -89,7 +89,7 @@ export function ProductTable({
         },
       },
       {
-        accessorKey: "category",
+        accessorKey: "categoryId",
         header: ({ column }) => (
           <DataTableColumnHeader column={column} title="Category" />
         ),
@@ -97,7 +97,7 @@ export function ProductTable({
           return (
             <div className="flex space-x-2">
               <span className="max-w-[500px] truncate font-medium">
-                {row.getValue("category")}
+                {row.getValue("categoryId")}
               </span>
             </div>
           );

@@ -32,10 +32,10 @@ const Products = () => {
     console.log(categories);
   }, []);
 
-  const deleteProduct = async (categoryId: number) => {
+  const deleteProduct = async (id: number) => {
     try {
-      const response = await axios.delete("/api/category", {
-        data: { categoryId },
+      const response = await axios.delete("/api/products", {
+        data: { id },
       });
       await fetchedProducts();
       toast.success("Product deleted successfully.");

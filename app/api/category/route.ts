@@ -53,7 +53,7 @@ export const PUT = async (req: NextRequest) => {
     const {
       payload: { id, title, description, position },
     } = reqBody;
-
+    console.log(reqBody);
     // Query Firestore to find the document with matching id
     const q = query(collection(db, "Category"), where("id", "==", id));
     const querySnapshot = await getDocs(q);

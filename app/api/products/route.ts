@@ -1,6 +1,7 @@
 import { db } from "@/lib/firebase";
 import { Product } from "@/types/productType";
 import { sendResponse } from "@/utils/common";
+import { v4 as uuidv4 } from "uuid";
 import { findCategoryByName } from "@/utils/getCollectionByName";
 import {
   collection,
@@ -31,25 +32,15 @@ export const GET = async (req: NextRequest) => {
 export const POST = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
-    const {
-      name,
-      description,
-      categoryName,
-      imageUrl,
-      price,
-      cost,
-      stock,
-      weight,
-    } = reqBody;
-
-    const categoryId = findCategoryByName(categoryName);
+    const { name, description, category, price, stock, weight } = reqBody;
+    console.log(reqBody);
     const snapshot = addDoc(collection(db, "Product"), {
       name,
       description,
-      categoryId: categoryId,
-      imageUrl,
+      categoryId: category,
+      imageUrl: "test",
       price,
-      cost,
+      cost: 2,
       stock,
       weight,
     });
@@ -63,29 +54,25 @@ export const PUT = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
     const {
-      id,
-      name,
-      description,
-      categoryName,
-      imageUrl,
-      price,
-      cost,
-      stock,
-      weight,
+      payload: { id, name, category, description, price, stock, weight },
     } = reqBody;
-    const docRef = doc(db, "Product", id);
 
-    const categoryId = findCategoryByName(categoryName);
-    const res = await updateDoc(docRef, {
+    console.log(reqBody);
+    console.log(id);
+
+    // Reference the document using the provided document ID
+    const productRef = doc(db, "Product", id);
+
+    // Update the document
+    await updateDoc(productRef, {
       name,
       description,
-      categoryId,
-      imageUrl,
+      categoryId: category,
       price,
-      cost,
       stock,
       weight,
     });
+
     return sendResponse(200, { message: "Product has been updated" });
   } catch (error: any) {
     return sendResponse(500, { message: error.message });
@@ -96,8 +83,16 @@ export const DELETE = async (req: NextRequest) => {
   try {
     const reqBody = await req.json();
     const { id } = reqBody;
+
+    console.log(reqBody);
+    console.log(id);
+
+    // Reference the document using the provided document ID
     const docRef = doc(db, "Product", id);
-    deleteDoc(docRef);
+
+    // Delete the document
+    await deleteDoc(docRef);
+
     return sendResponse(200, { message: "Product has been deleted" });
   } catch (error: any) {
     return sendResponse(500, { message: error.message });

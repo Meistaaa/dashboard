@@ -4,8 +4,9 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 export const findCategoryByName = async (categoryName: string) => {
   const categoryQuery = query(
     collection(db, "Category"),
-    where("title", "==", categoryName)
+    where("id", "==", categoryName)
   );
+  console.log("object");
   const categorySnapshot = await getDocs(categoryQuery);
   if (categorySnapshot.empty) {
     throw new Error("Category not found");
