@@ -2,5 +2,5 @@ export type Category = {
   id: string;
   title: string;
   description: string;
-  position: number;
+  position: string;
 };

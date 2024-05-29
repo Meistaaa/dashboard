@@ -36,11 +36,11 @@ import { Product } from "@/types/productType";
 const FormDataSchema = z.object({
   name: z.string().min(3, { message: "Name must be at least 3 characters." }),
   description: z.string(),
-  stock: z.number(),
-  weight: z.number(),
+  stock: z.string(),
+  weight: z.string(),
   imageUrl: z.string(),
   category: z.string(),
-  price: z.number(),
+  price: z.string(),
 });
 type Inputs = z.infer<typeof FormDataSchema>;
 
@@ -62,9 +62,9 @@ const CreateProduct = ({
     defaultValues: {
       name: "",
       description: "",
-      weight: 0,
-      stock: 0,
-      price: 0,
+      weight: "",
+      stock: "",
+      price: "",
       category: "",
       imageUrl: "",
     },
@@ -111,12 +111,12 @@ const CreateProduct = ({
     } else {
       form.reset({
         name: "",
-        description: "",
-        weight: 0,
-        stock: 0,
-        price: 0,
-        imageUrl: "",
-        category: "",
+      description: "",
+      weight: "",
+      stock: "",
+      price: "",
+      category: "",
+      imageUrl: "",
       });
       setSelectedProduct(null);
     }
@@ -232,7 +232,6 @@ const CreateProduct = ({
                         {...field}
                         {...form.register("price", {
                           required: true,
-                          setValueAs: (value) => parseInt(value), // Convert input value to number
                         })}
                       />
                     </FormControl>
@@ -253,7 +252,6 @@ const CreateProduct = ({
                         {...field}
                         {...form.register("weight", {
                           required: true,
-                          setValueAs: (value) => parseInt(value), // Convert input value to number
                         })}
                       />
                     </FormControl>
@@ -272,7 +270,6 @@ const CreateProduct = ({
                         {...field}
                         {...form.register("stock", {
                           required: true,
-                          setValueAs: (value) => parseInt(value), // Convert input value to number
                         })}
                       />
                     </FormControl>

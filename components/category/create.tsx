@@ -29,7 +29,7 @@ import { Loader2 } from "lucide-react";
 const FormDataSchema = z.object({
   title: z.string().min(3, { message: "Name must be at least 3 characters." }),
   description: z.string(),
-  position: z.number(),
+  position: z.string(),
 });
 type Inputs = z.infer<typeof FormDataSchema>;
 
@@ -49,7 +49,7 @@ const CreateCategory = ({
     defaultValues: {
       title: "",
       description: "",
-      position: 0,
+      position: "",
     },
   });
 
@@ -85,13 +85,13 @@ const CreateCategory = ({
       form.reset({
         title: selectedCategory.title,
         description: selectedCategory.description,
-        position: selectedCategory.position,
+        position:selectedCategory.position,
       });
     } else {
       form.reset({
         title: "",
         description: "",
-        position: 0,
+        position: "",
       });
       setSelectedCategory(null);
     }
@@ -155,21 +155,19 @@ const CreateCategory = ({
               name="position"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Position</FormLabel>
+                  <FormLabel>position</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Position"
+                      placeholder="position"
                       {...field}
-                      {...form.register("position", {
-                        required: true,
-                        setValueAs: (value) => parseInt(value), // Convert input value to number
-                      })}
+                      {...form.register("position", { required: true })}
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
+            
             <DialogFooter>
               <Button disabled={loading} type="submit">
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

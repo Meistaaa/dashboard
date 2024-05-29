@@ -4,8 +4,8 @@ export type Product = {
   description: string;
   categoryId: string;
   imageUrl: string;
-  price: number;
-  cost: number;
-  stock: number;
-  weight: number;
+  price: string;
+  cost: string;
+  stock: string;
+  weight: string;
 };
