@@ -140,7 +140,7 @@ const CreateProduct = ({
           <DialogDescription>Create a new Product.</DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(processForm)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(processForm)} className="space-y-4">
             <div className="flex justify-between gap-2"></div>
             <FormField
               name="name"
@@ -190,93 +190,98 @@ const CreateProduct = ({
                 </FormItem>
               )}
             />
-            <FormField
-              control={form.control}
-              name="category"
-              render={({ field }) => (
-                <FormItem className="w-1/2">
-                  <FormLabel>Product Category</FormLabel>
-                  <Select
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                  >
+            <div className="flex gap-4">
+              <FormField
+                control={form.control}
+                name="category"
+                render={({ field }) => (
+                  <FormItem className="w-1/2">
+                    <FormLabel>Product Category</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories?.map((category) => (
+                          <SelectItem
+                            key={category.id}
+                            value={category.id.toString()}
+                          >
+                            {category.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="price"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Price</FormLabel>
                     <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select a category" />
-                      </SelectTrigger>
+                      <Input
+                        placeholder="Price"
+                        {...field}
+                        {...form.register("price", {
+                          required: true,
+                          setValueAs: (value) => parseInt(value), // Convert input value to number
+                        })}
+                      />
                     </FormControl>
-                    <SelectContent>
-                      {categories?.map((category) => (
-                        <SelectItem
-                          key={category.id}
-                          value={category.id.toString()}
-                        >
-                          {category.title}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="price"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Price</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Price"
-                      {...field}
-                      {...form.register("price", {
-                        required: true,
-                        setValueAs: (value) => parseInt(value), // Convert input value to number
-                      })}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="weight"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Weight</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Weight"
-                      {...field}
-                      {...form.register("weight", {
-                        required: true,
-                        setValueAs: (value) => parseInt(value), // Convert input value to number
-                      })}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              name="stock"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Stock</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Stock"
-                      {...field}
-                      {...form.register("stock", {
-                        required: true,
-                        setValueAs: (value) => parseInt(value), // Convert input value to number
-                      })}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+            <div className="flex gap-4">
+              <FormField
+                name="weight"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Weight</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Weight"
+                        {...field}
+                        {...form.register("weight", {
+                          required: true,
+                          setValueAs: (value) => parseInt(value), // Convert input value to number
+                        })}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                name="stock"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Stock</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Stock"
+                        {...field}
+                        {...form.register("stock", {
+                          required: true,
+                          setValueAs: (value) => parseInt(value), // Convert input value to number
+                        })}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <DialogFooter>
               <Button disabled={loading} type="submit">
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
