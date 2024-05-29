@@ -163,8 +163,8 @@ export function OrderTable({
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="0">Pending</SelectItem>
-                <SelectItem value="1">Delivered</SelectItem>
-                <SelectItem value="2">Cancelled</SelectItem>
+                <SelectItem value="1">Cancelled</SelectItem>
+                <SelectItem value="2">Delivered</SelectItem>
               </SelectContent>
             </Select>
           );
