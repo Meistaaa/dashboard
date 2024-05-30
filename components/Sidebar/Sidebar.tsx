@@ -12,6 +12,7 @@ import {
   Bars3Icon,
 } from "@heroicons/react/24/outline";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 interface NavigationItem {
   name: string;
@@ -38,14 +39,6 @@ export default function Sidebar() {
 
   return (
     <>
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-white">
-        <body class="h-full">
-        ```
-      */}
       <div>
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -100,12 +93,14 @@ export default function Sidebar() {
                     </div>
                   </Transition.Child>
                   {/* Sidebar component, swap this element with another sidebar if you like */}
-                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#4f7f4e] px-6 pb-2">
-                    <div className="flex h-16 shrink-0 items-center">
-                      <img
+                  <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#129908] px-6 pb-2">
+                    <div className="flex h-16  items-center justify-center">
+                      <Image
                         className="h-8 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=white"
+                        src="/green-leaf.jpeg"
                         alt="Your Company"
+                        width={24}
+                        height={24}
                       />
                     </div>
                     <nav className="flex flex-1 flex-col">
@@ -118,8 +113,8 @@ export default function Sidebar() {
                                   href={item.href}
                                   className={classNames(
                                     pathname === item.href
-                                      ? "bg-[#234f1e] text-white"
-                                      : "text-indigo-200 hover:text-white hover:bg-[#234f1e]",
+                                      ? "bg-[#2c820c] text-white"
+                                      : "text-white hover:text-white hover:bg-[#2c820c]",
                                     "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                                   )}
                                 >
@@ -127,7 +122,7 @@ export default function Sidebar() {
                                     className={classNames(
                                       pathname === item.href
                                         ? "text-white"
-                                        : "text-indigo-200 group-hover:text-white",
+                                        : "text-white group-hover:text-white",
                                       "h-6 w-6 shrink-0"
                                     )}
                                     aria-hidden="true"
@@ -150,12 +145,14 @@ export default function Sidebar() {
         {/* Static sidebar for desktop */}
         <div className="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
           {/* Sidebar component, swap this element with another sidebar if you like */}
-          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#4f7f4e] px-6">
-            <div className="flex h-16 shrink-0 items-center">
-              <img
-                className="h-8 w-auto"
-                src="https://tailwindui.com/img/logos/mark.svg?color=white"
+          <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-[#195104] px-6">
+            <div className="flex mt-4 shrink-0 items-center justify-center">
+              <Image
+                className=" w-auto"
+                src="/green-leaf.jpeg"
                 alt="Your Company"
+                width={64}
+                height={64}
               />
             </div>
             <nav className="flex flex-1 flex-col">
@@ -168,8 +165,8 @@ export default function Sidebar() {
                           href={item.href}
                           className={classNames(
                             pathname === item.href
-                              ? "bg-[#234f1e] text-white"
-                              : "text-indigo-200 hover:text-white hover:bg-[#234f1e]",
+                              ? "bg-[#2c820c] text-white"
+                              : "text-white hover:text-white hover:bg-[#2c820c]",
                             "group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
                           )}
                         >
@@ -177,7 +174,7 @@ export default function Sidebar() {
                             className={classNames(
                               pathname === item.href
                                 ? "text-white"
-                                : "text-indigo-200 group-hover:text-white",
+                                : "text-white group-hover:text-white",
                               "h-6 w-6 shrink-0"
                             )}
                             aria-hidden="true"
@@ -196,7 +193,7 @@ export default function Sidebar() {
         <div className="sticky top-0  flex items-center gap-x-6  px-4 py-4 shadow-sm sm:px-6 lg:hidden">
           <button
             type="button"
-            className="-m-2.5 p-2.5 text-indigo-200 lg:hidden"
+            className="-m-2.5 p-2.5 text-white lg:hidden"
             onClick={() => setSidebarOpen(true)}
           >
             <span className="sr-only">Open sidebar</span>

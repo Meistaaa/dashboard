@@ -85,7 +85,7 @@ const CreateCategory = ({
       form.reset({
         title: selectedCategory.title,
         description: selectedCategory.description,
-        position:selectedCategory.position,
+        position: selectedCategory.position,
       });
     } else {
       form.reset({
@@ -107,7 +107,9 @@ const CreateCategory = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="default">Create</Button>
+        <Button variant="default" className="bg-[#2c820c] hover:bg-[#195104]">
+          Create
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
@@ -167,7 +169,7 @@ const CreateCategory = ({
                 </FormItem>
               )}
             />
-            
+
             <DialogFooter>
               <Button disabled={loading} type="submit">
                 {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

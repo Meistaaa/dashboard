@@ -111,12 +111,12 @@ const CreateProduct = ({
     } else {
       form.reset({
         name: "",
-      description: "",
-      weight: "",
-      stock: "",
-      price: "",
-      category: "",
-      imageUrl: "",
+        description: "",
+        weight: "",
+        stock: "",
+        price: "",
+        category: "",
+        imageUrl: "",
       });
       setSelectedProduct(null);
     }
@@ -132,7 +132,9 @@ const CreateProduct = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
-        <Button variant="default">Create</Button>
+        <Button variant="default" className="bg-[#2c820c] hover:bg-[#195104]">
+          Create
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[475px]">
         <DialogHeader>
